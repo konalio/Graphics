@@ -107,6 +107,21 @@ namespace Spectrum {
             _verticalLine.Y2 = currentMousePoint.Y;
         }
 
+        public void Reset()
+        {
+            foreach (var chosenFactor in Factors)
+            {
+                chosenFactor.Intensity = Constants.MinIntensity;
+
+                Canvas.SetTop(chosenFactor.DrawnFactor, Constants.PlotHeight);
+
+                chosenFactor.LeftLine.Y2 = Constants.PlotHeight;
+
+                chosenFactor.RightLine.Y1 = Constants.PlotHeight;
+            }
+            RecalculateColor();
+        }
+
         private void PlotAreaCanvas_Loaded(object sender, RoutedEventArgs e) {
             PlotAreaCanvas.Children.Add(_verticalLine);
             PlotAreaCanvas.Children.Add(_horizontalLine);

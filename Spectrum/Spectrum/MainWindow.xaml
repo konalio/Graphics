@@ -21,6 +21,9 @@
             <ComboBox x:Name="ColourSpaceComboBox" Grid.Row="0" Height="40" SelectedIndex="0" FontSize="20" SelectionChanged="ColourSpaceComboBox_SelectionChanged">
                 <ComboBoxItem>sRGB</ComboBoxItem>
                 <ComboBoxItem>AdobeRGB</ComboBoxItem>
+                <ComboBoxItem>AppleRGB</ComboBoxItem>
+                <ComboBoxItem>WideGamutRGB</ComboBoxItem>
+                <ComboBoxItem>PAL/SECAM RGB</ComboBoxItem>
             </ComboBox>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -30,7 +33,10 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Height="40" Text="Selected color" TextAlignment="Center" FontSize="25"></TextBlock>
                 <Canvas x:Name="SelectedColorCanvas" Grid.Row="2" Height="100" Width="100"></Canvas>
-                <Button x:Name="ConvertButton" Grid.Row="0" Height="40" Width="120" FontSize="20" Click="ConvertButton_Click">Convert</Button>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button x:Name="ConvertButton" Height="40" Width="100" FontSize="20" Click="ConvertButton_Click">Convert</Button>
+                    <Button x:Name="ResetButton" Height="40" Width="90" FontSize="20" Click="ResetButton_Click">Clear</Button>
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>
