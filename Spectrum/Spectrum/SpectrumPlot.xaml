@@ -4,18 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="540" d:DesignWidth="680">
+             d:DesignHeight="540" d:DesignWidth="840">
     <Canvas Background="White">
-        <Canvas x:Name="PlotAreaCanvas" Background="White" Canvas.Top="10" Canvas.Left="20" Width="650" Height="510" MouseMove="PlotAreaCanvas_MouseMove" Loaded="PlotAreaCanvas_Loaded" MouseDown="PlotAreaCanvas_MouseDown" MouseUp="PlotAreaCanvas_MouseUp">
+        <Canvas x:Name="PlotAreaCanvas" Background="White" Canvas.Top="10" Canvas.Left="20" Width="810" Height="510" MouseMove="PlotAreaCanvas_MouseMove" Loaded="PlotAreaCanvas_Loaded" MouseDown="PlotAreaCanvas_MouseDown" MouseUp="PlotAreaCanvas_MouseUp">
             <Line X1="1" Y1="0" X2="0" Y2="510" Stroke="Black"></Line>
-            <Line X1="0" Y1="510" X2="650" Y2="510" Stroke="Black"></Line>
+            <Line X1="0" Y1="510" X2="810" Y2="510" Stroke="Black"></Line>
         </Canvas>
         <Line X1="20" Y1="0" X2="15" Y2="0" Canvas.Top="520" Stroke="Black" StrokeThickness="1"></Line>
         <TextBlock Canvas.Top="510" Canvas.Left="5" FontSize="10">0</TextBlock>
         <Line X1="20" Y1="0" X2="15" Y2="0" Canvas.Top="270" Stroke="Black" StrokeThickness="1"></Line>
-        <TextBlock Canvas.Top="260" Canvas.Left="1" FontSize="10">0.5</TextBlock>
+        <TextBlock Canvas.Top="260" Canvas.Left="1" FontSize="10">0.9</TextBlock>
         <Line X1="20" Y1="0" X2="15" Y2="0" Canvas.Top="20" Stroke="Black" StrokeThickness="1"></Line>
-        <TextBlock Canvas.Top="10" Canvas.Left="5" FontSize="10">1</TextBlock>
+        <TextBlock Canvas.Top="10" Canvas.Left="5" FontSize="10">1.8</TextBlock>
         <Line X1="0" Y1="0" X2="0" Y2="5" Canvas.Top="520" Canvas.Left="20" Stroke="Black" StrokeThickness="1"></Line>
         <TextBlock Canvas.Bottom="1" Canvas.Left="15" FontSize="10">380</TextBlock>
         <Line X1="0" Y1="0" X2="0" Y2="5" Canvas.Top="520" Canvas.Left="100" Stroke="Black" StrokeThickness="1"></Line>
@@ -34,5 +34,9 @@
         <TextBlock Canvas.Bottom="1" Canvas.Left="575" FontSize="10">660</TextBlock>
         <Line X1="0" Y1="0" X2="0" Y2="5" Canvas.Top="520" Canvas.Left="660" Stroke="Black" StrokeThickness="1"></Line>
         <TextBlock Canvas.Bottom="1" Canvas.Left="655" FontSize="10">700</TextBlock>
+        <Line X1="0" Y1="0" X2="0" Y2="5" Canvas.Top="520" Canvas.Left="740" Stroke="Black" StrokeThickness="1"></Line>
+        <TextBlock Canvas.Bottom="1" Canvas.Left="735" FontSize="10">740</TextBlock>
+        <Line X1="0" Y1="0" X2="0" Y2="5" Canvas.Top="520" Canvas.Left="820" Stroke="Black" StrokeThickness="1"></Line>
+        <TextBlock Canvas.Bottom="1" Canvas.Left="815" FontSize="10">780</TextBlock>
     </Canvas>
 </UserControl>

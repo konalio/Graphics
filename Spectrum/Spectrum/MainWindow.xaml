@@ -2,15 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:spectrum="clr-namespace:Spectrum"
-        Title="Spectrum2RGB" Height="600" Width="900">
+        Title="Spectrum2RGB" Height="600" Width="1060">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="700"></ColumnDefinition>
+            <ColumnDefinition Width="860"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <Border Width="680" Height="540" BorderBrush="Black" BorderThickness="1">
-                <spectrum:SpectrumPlot></spectrum:SpectrumPlot>
+            <Border Width="840" Height="540" BorderBrush="Black" BorderThickness="1">
+                <spectrum:SpectrumPlot x:Name="SpectrumPlot"></spectrum:SpectrumPlot>
             </Border>
         </DockPanel>
         <Grid Grid.Column="1">
@@ -18,14 +18,19 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0" Height="40"></ComboBox>
+            <ComboBox x:Name="ColourSpaceComboBox" Grid.Row="0" Height="40" SelectedIndex="0" FontSize="20" SelectionChanged="ColourSpaceComboBox_SelectionChanged">
+                <ComboBoxItem>sRGB</ComboBoxItem>
+                <ComboBoxItem>AdobeRGB</ComboBoxItem>
+            </ComboBox>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Height="40" Text="Selected color" TextAlignment="Center" FontSize="25"></TextBlock>
-                <Canvas Grid.Row="1" Height="100" Width="100" Background="Black"></Canvas>
+                <TextBlock Grid.Row="1" Height="40" Text="Selected color" TextAlignment="Center" FontSize="25"></TextBlock>
+                <Canvas x:Name="SelectedColorCanvas" Grid.Row="2" Height="100" Width="100"></Canvas>
+                <Button x:Name="ConvertButton" Grid.Row="0" Height="40" Width="120" FontSize="20" Click="ConvertButton_Click">Convert</Button>
             </Grid>
         </Grid>
     </Grid>

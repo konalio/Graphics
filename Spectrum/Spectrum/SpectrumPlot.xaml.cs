@@ -1,33 +1,34 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using Timer = System.Timers.Timer;
 
 namespace Spectrum {
     /// <summary>
     /// Interaction logic for SpectrumPlot.xaml
     /// </summary>
+
     public partial class SpectrumPlot {
         //Lines on plot to choose desired values precisely
         private readonly Line _verticalLine = new Line { X1 = 0, Y1 = Constants.PlotHeight, X2 = 0, Y2 = Constants.PlotHeight, Stroke = Brushes.Cyan };
         private readonly Line _horizontalLine = new Line { X1 = 0, Y1 = 0, X2 = 0, Y2 = 0, Stroke = Brushes.Cyan };
 
         private bool _plotIsEdited;
-        private readonly Timer _editingTimer = new Timer(10);
 
         public List<Factor> Factors { get; set; }
 
+        public double X { get; set; }
+
+        public double Y { get; set; }
+
+        public double Z { get; set; }
+
         public SpectrumPlot() {
             InitializeComponent();
-            _editingTimer.Elapsed += (sender, args) => HandleSpectrumEditing();
-            _editingTimer.Start();
         }
-
+        
         private void PlotAreaCanvas_MouseMove(object sender, MouseEventArgs e) {
             var currentMousePoint = e.GetPosition(this);
 
@@ -40,6 +41,24 @@ namespace Spectrum {
 
             //ToDo przypadki brzegowe
             HandleSpectrumEditing();
+            RecalculateColor();
+        }
+
+        private void RecalculateColor() {
+            double x = 0, y = 0, z = 0;
+
+            for (var i = 0; i < Factors.Count; i++) {
+                var intensity = Factors[i].Intensity;
+                x += intensity * Matricies.ColorMatchers[i].X;
+                y += intensity * Matricies.ColorMatchers[i].Y;
+                z += intensity * Matricies.ColorMatchers[i].Z;
+            }
+
+            var xyz = x + y + z;
+
+            X = x / xyz;
+            Y = y / xyz;
+            Z = z / xyz;
         }
 
         private void HandleSpectrumEditing() {
@@ -49,8 +68,8 @@ namespace Spectrum {
             var mouseXAsInt = (int)currentMousePoint.X;
             var mouseYAsInt = (int)currentMousePoint.Y;
 
-            var index = mouseXAsInt / 2;
-            var newIntensity = ((double)(Constants.PlotHeight - mouseYAsInt)) / Constants.MaxIntensityInPixels;
+            var index = mouseXAsInt / 10;
+            var newIntensity = Constants.MaxIntensity * (Constants.PlotHeight - mouseYAsInt) / Constants.MaxIntensityInPixels;
 
             if (index >= Factors.Count) return;
 
@@ -68,8 +87,8 @@ namespace Spectrum {
         }
 
         private void MovePlotHelperLines(Point currentMousePoint) {
-            if (currentMousePoint.X < 0 || currentMousePoint.X > 640 || currentMousePoint.Y < 10 ||
-                currentMousePoint.Y > 510)
+            if (currentMousePoint.X < 0 || currentMousePoint.X > Constants.PlotWidth || currentMousePoint.Y < 10 ||
+                currentMousePoint.Y > Constants.PlotHeight)
                 return;
 
             MoveVerticalLine(currentMousePoint);
@@ -94,12 +113,12 @@ namespace Spectrum {
 
             Factors = new List<Factor>();
 
-            for (var i = Constants.MinWavelength; i <= Constants.MaxWavelength; i++) {
+            for (var i = Constants.MinWavelength; i <= Constants.MaxWavelength; i += 5) {
                 Factors.Add(new Factor(i));
             }
 
             for (var i = 0; i < Factors.Count; i++) {
-                var factorRect = new Rectangle { Width = 2, Height = 2, Fill = Brushes.Black };
+                var factorRect = new Rectangle { Width = 1, Height = 1, Fill = Brushes.Black };
                 Canvas.SetBottom(factorRect, 0);
                 Canvas.SetLeft(factorRect, Factors[i].FactorPoint.X);
                 PlotAreaCanvas.Children.Add(factorRect);

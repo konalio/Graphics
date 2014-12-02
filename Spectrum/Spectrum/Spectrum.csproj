@@ -55,11 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdobeRGB.cs" />
+    <Compile Include="ColourSpace.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Factor.cs" />
+    <Compile Include="Matricies.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SpectrumPlot.xaml.cs">
       <DependentUpon>SpectrumPlot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SRGB.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
