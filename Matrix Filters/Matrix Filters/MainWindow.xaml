@@ -1,0 +1,116 @@
+﻿<Window x:Class="Matrix_Filters.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Photoshop 2.0" Height="700" Width="1200"
+        Name="PhotoshopWindow" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Width="600">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Image MaxHeight="800" MaxWidth="1500" x:Name="DisplayedImage"></Image>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ApplyFilterButton" Grid.Column="0" Width="120" Height="40" FontSize="20" Click="ApplyFilterButton_Click">Apply filter</Button>
+                <Button x:Name="UndoFilterButton" Grid.Column="1" Width="80" Height="40" FontSize="20" Click="UndoFilterButton_Click">Undo</Button>
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="340"></RowDefinition>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Height="340" VerticalAlignment="Top" Header="Pick filter" FontSize="20" Margin="0,0,1,0">
+                <Grid x:Name="FilterGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="FilterComboBox" ItemsSource="{Binding Path=DefinedFilters}" Grid.Row="0" IsEditable="True" SelectionChanged="FilterComboBox_SelectionChanged"></ComboBox>
+                    <TextBox Grid.Row="1" Text="{Binding Path=ActiveFilter.Name}"></TextBox>
+                    <GroupBox Grid.Row="2" HorizontalAlignment="Center" Header="Enter filter matrix" FontSize="10">
+                        <Grid x:Name="FilterMatrixGrid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="0" Height="30" Width="30" TextAlignment="Center" 
+                                     FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.TopLeft}"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.TopMid}"/>
+                            <TextBox Grid.Row="0" Grid.Column="2" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.TopRight}"/>
+                            <TextBox Grid.Row="1" Grid.Column="0" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.MidLeft}"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.MidMid}"/>
+                            <TextBox Grid.Row="1" Grid.Column="2" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.MidRight}"/>
+                            <TextBox Grid.Row="2" Grid.Column="0" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.BotLeft}"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.BotMid}"/>
+                            <TextBox Grid.Row="2" Grid.Column="2" Height="30" Width="30" TextAlignment="Center" FontSize="20" 
+                                     Text="{Binding Path=ActiveFilter.FilterMatrix.BotRight}"/>
+                        </Grid>
+                    </GroupBox>
+                    <DockPanel Grid.Row="3">
+                        <TextBlock Width="50" DockPanel.Dock="Left">Shift:</TextBlock>
+                        <TextBox x:Name="ShiftTextBox" Text="{Binding Path=ActiveFilter.Shift}" HorizontalAlignment="Right" Width="40" FontSize="20" Margin="2, 2, 2, 2"></TextBox>
+                    </DockPanel>
+                    <DockPanel Grid.Row="4">
+                        <TextBlock Width="70">Divisor:</TextBlock>
+                        <TextBox x:Name="DivisorTextBox" Text="{Binding Path=ActiveFilter.Divisor}" HorizontalAlignment="Right" Width="40" FontSize="20" Margin="2, 2, 2, 2"></TextBox>
+                    </DockPanel>
+                    <Button x:Name="SaveFilterButton" Grid.Row="5" Width="160" Margin="10, 10, 10, 10" Click="SaveFilterButton_Click">Save new filter</Button>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Manage file" FontSize="20" Padding="5" Margin="0,0,1,10">
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="LoadImageButton" Width="150" Margin="5" Click="LoadImageButton_Click">Load image</Button>
+                    <Button x:Name="SaveImageButton"  Width="150" Margin="5" Click="SaveImageButton_Click">Save image</Button>
+                    <Button x:Name="ReloadImageButton" Width="150" Margin="5" Click="ReloadImageButton_Click">Reload image</Button>
+                    <Button x:Name="LoadSampleImageButton" Width="150" Margin="5" Click="LoadSampleImageButton_Click">Load sample</Button>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+        <GroupBox Grid.Column="2" Width="350" Header="Histograms and image info" FontSize="20">
+            <Grid x:Name="HistogramGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Left" Width="200">Numer of pixels:</TextBlock>
+                <Border Height="200" Grid.Row="1" x:Name="RedBorder" BorderThickness="1"></Border>
+                <Border Height="200" Grid.Row="2" x:Name="GreenBorder" BorderThickness="1"></Border>
+                <Border Height="200" Grid.Row="3" x:Name="BlueBorder" BorderThickness="1"></Border>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>
