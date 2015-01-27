@@ -58,6 +58,7 @@
     <Compile Include="AdobeRGB.cs" />
     <Compile Include="AppleRgb.cs" />
     <Compile Include="ColourSpace.cs" />
+    <Compile Include="ColourSpaceFactory.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Factor.cs" />
     <Compile Include="Matricies.cs" />

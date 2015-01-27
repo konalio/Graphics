@@ -11,7 +11,7 @@ namespace Spectrum {
         }
 
         private ColourSpace _currentColourSpace = new Srgb();
-
+        
         private void ConvertButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var newColor = SpectrumToColor();
@@ -21,19 +21,19 @@ namespace Spectrum {
         private Brush SpectrumToColor()
         {
             double r, g, b;
-            CalculateRGBValues(out r, out g, out b);
+            CalculateRgbValues(out r, out g, out b);
 
             //If has negative values - move inside gamut
             RecalculateToGamut(ref r, ref g, ref b);
 
-            //normalize to 1
+            //Normalize to [0:1]
             NormalizeRgb(ref r, ref g, ref b);
 
             //Create new colour with Alpha channel set to maximum
             return new SolidColorBrush(new Color { R = (byte)r, G = (byte)g, B = (byte)b, A = 255});
         }
 
-        private void CalculateRGBValues(out double r, out double g, out double b)
+        private void CalculateRgbValues(out double r, out double g, out double b)
         {
             r = _currentColourSpace.ConversionMatrix[0][0]*SpectrumPlot.X +
                 _currentColourSpace.ConversionMatrix[0][1]*SpectrumPlot.Y +
@@ -70,31 +70,12 @@ namespace Spectrum {
             b += w;
         }
 
-        private void ColourSpaceComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ColourSpaceComboBox_SelectionChanged(object sender,
+            System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var index = ColourSpaceComboBox.SelectedIndex;
-
-            switch (index)
-            {
-                case 0:
-                    _currentColourSpace = new Srgb();
-                    break;
-                case 1:
-                    _currentColourSpace = new AdobeRgb();
-                    break;
-                case 2:
-                    _currentColourSpace = new AppleRgb();
-                    break;
-                case 3:
-                    _currentColourSpace = new WideGamutRgb();
-                    break;
-                case 4:
-                    _currentColourSpace = new PalSecamRgb();
-                    break;
-                default:
-                    _currentColourSpace = new Srgb();
-                    break;
-            }
+            var selectedType = (ColourSpaceType) ColourSpaceComboBox.SelectedItem;
+            _currentColourSpace = ColourSpaceFactory.CreateColourSpace(selectedType);
         }
 
         private void ResetButton_Click(object sender, System.Windows.RoutedEventArgs e) {

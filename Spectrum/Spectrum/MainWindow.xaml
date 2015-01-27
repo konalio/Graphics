@@ -2,7 +2,17 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:spectrum="clr-namespace:Spectrum"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="Spectrum2RGB" Height="600" Width="1060">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="ColourSpaces" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="spectrum:ColourSpaceType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="860"></ColumnDefinition>
@@ -18,12 +28,9 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <ComboBox x:Name="ColourSpaceComboBox" Grid.Row="0" Height="40" SelectedIndex="0" FontSize="20" SelectionChanged="ColourSpaceComboBox_SelectionChanged">
-                <ComboBoxItem>sRGB</ComboBoxItem>
-                <ComboBoxItem>AdobeRGB</ComboBoxItem>
-                <ComboBoxItem>AppleRGB</ComboBoxItem>
-                <ComboBoxItem>WideGamutRGB</ComboBoxItem>
-                <ComboBoxItem>PAL/SECAM RGB</ComboBoxItem>
+            <ComboBox x:Name="ColourSpaceComboBox" Grid.Row="0" ItemsSource="{Binding Source={StaticResource ColourSpaces}}" 
+                      Height="40" SelectedIndex="0" FontSize="20" SelectionChanged="ColourSpaceComboBox_SelectionChanged">
+                
             </ComboBox>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
